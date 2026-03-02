@@ -1,0 +1,28 @@
+
+ベンチマークを用意するコマンド
+
+python /home/matsuo/pixmix/onthefly/onthefly_root/tools/make_moire_c_aim.py \
+--imagenet-val /disk4/datasets/ImageNet-1K/val \
+--out /home/matsuo/benchmarks/ImageNet-C-moire/moire_aim \
+--severities 4 \
+--num-workers 8
+
+ImageNet-Moire、こちらのパスに用意済み
+
+/home/matsuo/benchmarks/ImageNet-C-moire/moire_aim/4
+
+評価実験実行コマンド
+
+(pixmix) matsuo@lsds:~/pixmix/onthefly/onthefly_root$ bash /home/matsuo/pixmix/onthefly/onthefly_root/run_eval_moire_c.sh \
+/home/matsuo/pixmix/onthefly/experiments/vit_base_afa_online_100ep/model_best.pth.tar \
+0
+
+bash /home/matsuo/pixmix/onthefly/onthefly_root/run_eval_moire_c.sh \
+/home/matsuo/pixmix/onthefly/experiments/vit_base_standard_100ep/model_best.pth.tar \
+0
+
+/home/matsuo/pixmix/onthefly/experiments/abci3_comparing_methods/vit_base_moire_online_100ep_model_best.pth.tar
+
+bash /home/matsuo/pixmix/onthefly/onthefly_root/run_eval_moire_c.sh \
+/home/matsuo/pixmix/onthefly/experiments/vit_base_moire_online_100ep_20260109_1114_20260109_111449/model_best.pth.tar \
+3
