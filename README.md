@@ -110,11 +110,16 @@ Append `train_onthefly.py` arguments to override default parameters effortlessly
   ```
 
 ### 2. ImageNet-Moire Benchmark Creation & Evaluation
-* **Objective:** Test robustness against real-world Moiré noise (based on AIM 2019 Challenge).
+* **Objective:** Test model robustness against real-world Moiré noise.
+* **References:** * *AIM 2019 Challenge on Image Demoireing* [Yuan et al., ICCV Workshop 2019]
+  * *Moiré Photo Restoration Using Multiresolution CNNs* [Sun et al., TIP 2018]
+* **Methodology:** Edits the ImageNet-validation set (1,000 classes, 50 instances per class) based on mathematical formulas derived from the AIM 2019 Challenge.
 
-#### 🗂 2.1 Generate Benchmark
-* **Script:** `make_moire_c_aim.py`
-* **Target:** ImageNet-val (1,000 classes, Severity 4)
+#### 🗂 2.1 Generate Benchmark Dataset
+* **Script:** `tools/make_moire_c_aim.py`
+* **Target:** ImageNet-val
+* **Generation Condition:** Severity 4 (Customizable)
+
   ```bash
   python ./tools/make_moire_c_aim.py \
     --imagenet-val /path/to/ImageNet-1K/val \
@@ -125,10 +130,17 @@ Append `train_onthefly.py` arguments to override default parameters effortlessly
 
 #### 💻 2.2 Run Evaluation
 * **Script:** `run_eval_moire_c.sh`
-* **Preparation:** Set `IMAGENET_C_MOIRE_DIR` inside the script.
+* **Preparation:** Set `IMAGENET_C_MOIRE_DIR` inside the script or via environment variable.
+
   ```bash
-  # Example: Evaluate AFA Mix model (GPU 0)
+  # Evaluate AFA Mix model (GPU 0)
   bash run_eval_moire_c.sh ./experiments/vit_base_afa_online_100ep/model_best.pth.tar 0
+
+  # Evaluate Baseline (Standard) model (GPU 0)
+  bash run_eval_moire_c.sh ./experiments/vit_base_standard_100ep/model_best.pth.tar 0
+
+  # Evaluate Moire Mix model (GPU 3)
+  bash run_eval_moire_c.sh ./experiments/vit_base_moire_online_100ep/model_best.pth.tar 3
   ```
 
 ---
