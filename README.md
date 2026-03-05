@@ -232,3 +232,30 @@ export MIXING_SET_DIR="/path/to/mixingsets/10000_MoireMix_20260218"
 nohup bash run_experiment.sh pixmix 4 100 0 \
   > ./experiments/nohup_pixmix_moireDB_100ep_$(date +%Y%m%d_%H%M).log 2>&1 &
 ```
+
+#### 🔬 Ablation Studies (Hyperparameter Tuning)
+You can seamlessly conduct ablation studies by appending specific configuration arguments to the `run_experiment.sh` command. These extra arguments are directly passed to the underlying `train_onthefly.py` script, allowing you to override default hyperparameters such as the model architecture, the number of Moiré centers, and frequency ranges.
+
+**Example 1: Ablation on the Number of Moiré Centers ($N$)**
+Run fast 30-epoch ablation experiments using the lightweight `vit_tiny` architecture, restricting the maximum number of Moiré centers to 1 or 2.
+```bash
+# Set max Moiré centers to 1 (N=1) on GPU 0
+nohup bash ./run_experiment.sh moire 0 30 0 --arch vit_tiny --online-moire-centers-max 1 \
+  > ./experiments/nohup_moire_N1_vittiny_gpu0_30ep_$(date +%Y%m%d_%H%M).log 2>&1 &
+
+# Set max Moiré centers to 2 (N=2) on GPU 1
+nohup bash ./run_experiment.sh moire 1 30 0 --arch vit_tiny --online-moire-centers-max 2 \
+  > ./experiments/nohup_moire_N2_vittiny_gpu1_30ep_$(date +%Y%m%d_%H%M).log 2>&1 &
+```
+
+**Example 2: Ablation on the Frequency Range**
+Investigate the impact of different Moiré frequency bands (e.g., Low vs. Mid frequencies) on model robustness.
+```bash
+# Low Frequency Band (1-33) on GPU 0
+nohup bash ./run_experiment.sh moire 0 30 0 --arch vit_tiny --online-moire-freq-min 1 --online-moire-freq-max 33 \
+  > ./experiments/nohup_moire_freqLow_vittiny_gpu0_30ep_$(date +%Y%m%d_%H%M).log 2>&1 &
+
+# Mid Frequency Band (34-66) on GPU 3
+nohup bash ./run_experiment.sh moire 3 30 0 --arch vit_tiny --online-moire-freq-min 34 --online-moire-freq-max 66 \
+  > ./experiments/nohup_moire_freqMid_vittiny_gpu3_30ep_$(date +%Y%m%d_%H%M).log 2>&1 &
+```
