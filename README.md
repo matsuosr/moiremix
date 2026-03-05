@@ -16,6 +16,19 @@
 
 ---
 
+## ⚠️ Environment & Reproducibility Disclaimer
+
+Please note that the default configurations in our execution scripts (such as `--batch-size` and `--workers` in `run_experiment.sh` and `run_eval_best.sh`) are **optimized for our specific high-performance computing environment**.
+
+Running these scripts as-is on machines with lower specifications may result in GPU Out of Memory (OOM) errors or CPU bottlenecks. Please appropriately adjust these parameters according to your local hardware capabilities before execution.
+
+**[Our Experimental Hardware Setup]**
+* **CPU:** Intel(R) Xeon(R) Gold 6240 CPU @ 2.60GHz (36 Cores / 72 Threads, Dual Socket)
+* **GPU:** NVIDIA TITAN RTX (24GB VRAM) × 5
+* **CUDA / Driver:** CUDA Version 12.8 / NVIDIA Driver Version 570.211.01
+
+---
+
 ## 🚀 Reproducing Training Experiments
 
 ### 🛠 1. Environment & Dependencies
