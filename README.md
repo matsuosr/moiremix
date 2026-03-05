@@ -178,3 +178,57 @@ nohup env PYTHONPATH=. python -u fhmap/apps/eval_fhmap_vit.py \
     weightpath="./experiments/vit_base_moire_online_100ep/model_best.pth.tar" \
     > log_vit_moire_eps30_imagesample100_$(date +%Y%m%d_%H%M%S).txt 2>&1 &
 ```
+
+
+### 💻 4. Execution Commands
+
+Execute training using `run_experiment.sh`. Checkpoints and logs will be saved in automatically generated directories (e.g., `./experiments/vit_base_...`).
+
+**Basic Format**
+```bash
+bash run_experiment.sh {mode} [GPU_ID] [epochs] [warmup_epochs]
+```
+
+#### 📌 Supported Experiment Modes
+You can specify one of the following modes for the `{mode}` argument to run various baselines or mixing strategies:
+
+* **Standard & Augmentation Baselines:**
+  * `standard`, `cutout`, `mixup`, `cutmix`, `autoaugment`, `randaugment`, `augmix`, `gridmask`
+* **On-the-fly (Online) Mixing:** *(Generates mixing images dynamically during the training loop)*
+  * `moire`, `fractal` (or `coloredfractal`), `deadleaves`, `perlin`, `stripe`, `fourier2019`, `afa`
+* **Offline Mixing:** *(Requires pre-generated mixing datasets)*
+  * `pixmix`, `diffusemix`, `layermix`, `ipmix`
+* **Run All:**
+  * `all` *(Sequentially executes all defined experiments)*
+
+#### 💡 Basic Execution Examples
+
+**1. On-the-fly DeadLeaves Mixing**
+```bash
+bash run_experiment.sh deadleaves 0 100 5
+```
+
+**2. Standard MixUp Baseline**
+```bash
+bash run_experiment.sh mixup 1 100 5
+```
+
+**3. Standard Baseline**
+```bash
+bash run_experiment.sh standard 0 100 5
+```
+
+#### ⚠️ Special Execution: Specifying Custom Mixing Sets (Offline Mixing)
+For offline mixing modes like `pixmix`, the script relies on pre-generated texture datasets. You can explicitly override the default dataset path by exporting the `MIXING_SET_DIR` environment variable before execution. 
+
+This is particularly useful when evaluating your own generated datasets (e.g., a custom Moiré database) without modifying the preset files.
+
+**Example: Running PixMix with a custom MoiréMix dataset in the background (nohup)**
+```bash
+# Specify the path to your custom mixing images
+export MIXING_SET_DIR="/path/to/mixingsets/10000_MoireMix_20260218"
+
+# Execute in the background and output logs to a specific file
+nohup bash run_experiment.sh pixmix 4 100 0 \
+  > ./experiments/nohup_pixmix_moireDB_100ep_$(date +%Y%m%d_%H%M).log 2>&1 &
+```
