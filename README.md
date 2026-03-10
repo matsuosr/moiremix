@@ -77,11 +77,11 @@ Update the placeholder paths (`/path/to/...`) in the configuration files to matc
 * **Batch Execution:** `all`
 
 #### 💡 Execution Examples
-* **Online DeadLeaves** (GPU 0, 100 epochs):
+* **On-the-fly moire** (GPU 0, 100 epochs, warmup 5 epoch):
   ```bash
-  bash run_experiment.sh deadleaves 0 100 5
+  bash run_experiment.sh moire 0 100 5
   ```
-* **Offline PixMix** (using `fractals` preset):
+* **Original PixMix with preset fractal-arts** (using `fractals` preset. We should set the path to fractals folder.):
   ```bash
   bash run_experiment.sh pixmix fractals 0 100
   ```
