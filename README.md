@@ -83,7 +83,7 @@ Update the placeholder paths (`/path/to/...`) in the configuration files to matc
   ```
 * **Original PixMix with preset fractal-arts** (using `fractals` preset. We should set the path to fractals folder.):
   ```bash
-  bash run_experiment.sh pixmix fractals 0 100
+  bash run_experiment.sh pixmix fractals 0 100 0
   ```
 * **Custom Offline Dataset** (via Environment Variable):
   ```bash
