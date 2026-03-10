@@ -81,7 +81,10 @@ Update the placeholder paths (`/path/to/...`) in the configuration files to matc
   ```bash
   bash run_experiment.sh moire 0 100 5
   ```
-* **Original PixMix with preset fractal-arts** (using `fractals` preset. We should set the path to fractals folder.):
+* **Original PixMix with preset fractal-arts (using fractals preset):
+* ⚠️ Important Path Configuration Note:
+Execution requires a folder containing the texture images to be mixed during training (e.g., ...onthefly_root/mixingset/fractals/images).
+However, when setting the Offline Mixing Sets path inside mixing_presets.py, you must omit the images folder from the path (e.g., specify ...onthefly_root/mixingset/fractals). This specific pathing requirement follows the specifications of the original PixMix repository (https://github.com/andyzoujm/pixmix).
   ```bash
   bash run_experiment.sh pixmix fractals 0 100 0
   ```
